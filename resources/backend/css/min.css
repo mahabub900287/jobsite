@@ -1,0 +1,47 @@
+.manager-img{
+    width: 100px;
+    height: 100px;
+}
+.manager-contact-items li{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.manager-contact-items li:last-child{
+    margin-bottom: 0;
+}
+.manager-contact-items li a{
+    color: #333;
+}
+.manager-contact-items li a i{
+    color: #9A9691;
+}
+.w-20{
+    width: 20px;
+}
+.recent-offers h4{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.fw-bold{
+    font-weight: 600;
+}
+.day-ago{
+    font-size: 13px;
+    font-weight: 500;
+    color: #9A9691;
+}
+.recent-offers{
+    border-bottom: 1px solid #9A9691;
+}
+.recent-offers:last-child{
+    border-bottom: 0;
+}
+.fs-13{
+    font-size: 13px;
+}
+.recent-offers a{
+    color: #0162e8;
+    font-weight: 500;
+}
