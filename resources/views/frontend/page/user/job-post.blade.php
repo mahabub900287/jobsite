@@ -46,7 +46,8 @@
                                 <p class="text-secondary mb-1">Full Stack Developer</p>
                                 <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                                 <button class="btn btn-primary">Follow</button>
-                                <button class="btn btn-outline-primary">Message</button>
+                                <a class="btn btn-outline-primary" href="{{ route('frontend.job-post.create') }}">All
+                                    Post</a>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -86,14 +87,20 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="p-4 text-center">Post Your Job</h3>
-                        <form action="{{ route('frontend.job-post.store') }}" method="POST">
+                        <form action="{{ route('frontend.job-post.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Category</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control " value="" name="category">
+                                <div class="col-sm-9 text-secondary form-group">
+                                    <select name="category" class="selectpicker w-100" id="">
+                                        @forelse ($categorys as $category)
+                                            <option value="{{ $category->name }}">{{ $category->name }}
+                                            </option>
+                                        @empty
+                                        @endforelse
+                                    </select>
                                     @error('category')
                                         <p class="alert alert-danger p-2 mt-3">{{ $message }}</p>
                                     @enderror
@@ -127,7 +134,12 @@
                                     <h6 class="mb-0">Selary Rang</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" value="" name="selary_rang">
+                                    <select class="selectpicker w-100" name="selary_rang">
+                                        <option value="$10000-$15000">$10000-$15000 TK</option>
+                                        <option value="$15000-$20000">$15000-$20000 TK</option>
+                                        <option value="$20000-$25000">$20000-$25000 TK</option>
+                                        <option class="$25000-$30000">$25000-$30000 TK</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -135,15 +147,35 @@
                                     <h6 class="mb-0">Job Type</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="job_type" value="">
+                                    <select class="selectpicker w-100" name="job_type">
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Part Time">Part Time</option>
+                                        <option value="Intership">Intership</option>
+                                        <option class="Project Based">Project Based</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Image</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="file" class="form-control" name="image" value="">
+                                    @error('image')
+                                        <p class="alert alert-danger p-2 mt-3">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Description</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <textarea name="" id="" class="form-control" name="description" rows="6"></textarea>
+                                    <textarea id="" class="form-control" name="description" rows="6"></textarea>
+                                    @error('description')
+                                        <p class="alert alert-danger p-2 mt-3">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row">

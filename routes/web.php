@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Frontend\JobApplyController;
 use App\Http\Controllers\Frontend\JobPostController;
 use App\Http\Controllers\Frontend\RegistrationController;
 use App\Http\Controllers\Frontend\SubscribeController;
@@ -25,7 +26,11 @@ Route::group(['as'=>'frontend.'], function(){
 //----------------- Home Page ------------------//
 Route::get('', [HomeController::class, 'indexPage'])->name('home.index');
 Route::get('/profile', [HomeController::class, 'userProfile'])->name('profile.index');
+Route::get('/single-page/{id}', [HomeController::class, 'jobSingle'])->name('single.index');
+Route::get('/job-apply/{id}', [HomeController::class, 'jobApply'])->name('apply.index');
 Route::resource('/job-post', JobPostController::class)->except('show');
+//-------------------job Apply Controller -----------------------//
+Route::resource('/apply-job', JobApplyController::class)->except('show');
 });
 
 

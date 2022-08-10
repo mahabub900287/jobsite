@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\JobCetagory;
 use App\Models\JobType;
 
 class JobPostController extends Controller
@@ -15,8 +16,9 @@ class JobPostController extends Controller
      */
     public function index()
     {
+            $categorys = JobCetagory::latest('id')->get();
             $this->setPageTitle('User Job Post', 'User Job Post','User Job Post');
-            return view('frontend.page.user.job-post');
+            return view('frontend.page.user.job-post',compact('categorys'));
 
     }
     public function create(){
@@ -34,16 +36,24 @@ class JobPostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category' => 'required|max:255',
+            'category'     => 'required|max:255',
+            'company_name' => 'required|max:255',
+            'address'      => 'required|max:255',
+            'selary_rang'  => 'required',
+            'job_type'     => 'required',
+            'description'  => 'required',
+            'image'        => 'required|image|mimes:png,jpg,jpeg,gif,svg',
         ]);
-
-        JobType::create([
-            'category' => $request->category,
+      // new image upload
+      $imageName = $this->imageUpload( $request->file('image'),'media/Job/',null, null);
+       $data =  JobType::create([
+            'category'     => $request->category,
             'company_name' => $request->company_name,
-            'address' => $request->address,
-            'selary_rang' => $request->selary_rang,
-            'job_type' => $request->job_type,
-            'description' => $request->description,
+            'address'      => $request->address,
+            'selary_rang'  => $request->selary_rang,
+            'job_type'     => $request->job_type,
+            'description'  => $request->description,
+            'image'        => $imageName,
         ]);
         return redirect()->route('frontend.job-post.create');
     }
@@ -72,12 +82,16 @@ class JobPostController extends Controller
     public function update(Request $request, $id)
     {
         $datas = JobType::find($id);
+        // new image update
+        $imageName = $this->imageUpdate( $request->file('image'),'media/Job/',100, 100,$datas->image);
         $datas->update([
-            'category' => $request->category,
-            'company_name' => $request->company_name,
-            'address' => $request->address,
-            'selary_rang' => $request->selary_rang,
-            'job_type' => $request->job_type,
+            'category'      => $request->category,
+            'company_name'  => $request->company_name,
+            'address'       => $request->address,
+            'selary_rang'   => $request->selary_rang,
+            'job_type'      => $request->job_type,
+            'description'   => $request->description,
+            'image'         => $imageName,
         ]);
         return redirect()->route('frontend.job-post.create');
     }
@@ -91,6 +105,7 @@ class JobPostController extends Controller
     public function destroy($id)
     {
         $datas = JobType::find($id);
+        $this->imageDelete($datas->image);
         $datas->delete();
         return back();
 

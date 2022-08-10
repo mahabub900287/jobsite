@@ -28,12 +28,12 @@
                             <div class="main-menu">
                                 <nav class="d-none d-lg-block">
                                     <ul id="navigation">
-                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="{{ route('frontend.home.index') }}">Home</a></li>
                                         <li><a href="job_listing.html">Find a Jobs </a></li>
                                         @auth
                                             <li><a href="{{ route('frontend.job-post.index') }}">Post a Jobs </a></li>
                                         @else
-                                            <li><a href="">Post a Jobs </a></li>
+                                            <li><a href="{{ route('frontend.job-post.index') }}">Post a Jobs </a></li>
                                         @endauth
                                         <li><a href="#">Page</a>
                                             <ul class="submenu">

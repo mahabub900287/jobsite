@@ -86,7 +86,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="p-4 text-center">Post Your Job</h3>
-                        <form action="{{ route('frontend.job-post.update', $datas->id) }}" method="POST">
+                        <form action="{{ route('frontend.job-post.update', $datas->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <input type="hidden" name="id">
@@ -108,7 +109,7 @@
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <input type="text" class="form-control" name="company_name"
-                                        value="{{ $datas->selary_rang }}">
+                                        value="{{ $datas->company_name }}">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -124,8 +125,20 @@
                                     <h6 class="mb-0">Selary Rang</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" value="{{ $datas->selary_rang }}"
-                                        name="selary_rang">
+                                    <select class="selectpicker w-100" name="selary_rang">
+                                        <option value="$10000-$15000"
+                                            @isset($datas) {{ $datas->selary_rang == "$10000-$15000" ? 'selected' : '' }} @endisset>
+                                            $10000-$15000 TK</option>
+                                        <option value="$15000-$20000"
+                                            @isset($datas) {{ $datas->selary_rang == "$15000-$20000" ? 'selected' : '' }} @endisset>
+                                            $15000-$20000 TK</option>
+                                        <option value="$20000-$25000"
+                                            @isset($datas) {{ $datas->selary_rang == "$20000-$25000" ? 'selected' : '' }} @endisset>
+                                            $20000-$25000 TK</option>
+                                        <option class="$25000-$30000"
+                                            @isset($datas) {{ $datas->selary_rang == "$25000-$30000" ? 'selected' : '' }} @endisset>
+                                            $25000-$30000 TK</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -136,6 +149,18 @@
                                     <input type="text" class="form-control" name="job_type"
                                         value="{{ $datas->job_type }}">
                                 </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Image</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="file" class="form-control" name="image" value="">
+                                    @error('image')
+                                        <p class="alert alert-danger p-2 mt-3">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-3">

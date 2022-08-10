@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AppearanceController;
+use App\Http\Controllers\Backend\Admin\CategoryCotronller;
 use App\Http\Controllers\Backend\Admin\PageController;
 use App\Http\Controllers\Backend\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -11,10 +12,10 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['auth']], function
     //------------------ Dashboard ---------------------//
     Route::get('/dashboard',[AdminDashboardController::class, 'dashboard'])
         ->name('dashboard');
-
+    Route::resource('/cetagory',CategoryCotronller::class)->except('show');
     //------------------------ Apperance -----------------------//
     Route::group(['prefix'=>'apperance','as'=>'apperance.'], function(){
-        Route::resource('setting',SettingController::class)->except('show');
+        Route::resource('setting',SettingController::class)->except('show','create');
     });
 
     //==============Theme Setting=================================//
